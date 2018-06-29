@@ -22,6 +22,8 @@
 
     $("#submitBtn").click(App.submitContent);
 
+    $("#showPage").each(App.showPage);
+
   };
 
   App.submitContent = function (event) {
@@ -62,7 +64,7 @@
     const privkey = App.config.privkey;
     var nonce = Math.random().toString().slice(2);
 
-console.info(["nonce", nonce]);
+    console.info(["nonce", nonce]);
 
     const tx = {
       to: App.config.sendTo,
@@ -103,6 +105,33 @@ console.info(["nonce", nonce]);
       url = url.replace("$txid", txid);
       console.info(["url:", url]);
 
+      App.redirectTo("show.html", {txid: txid});
+    }
+
+  };
+
+  // redirect to a page with hash params
+  // e.g.: App.redirectTo("show.html", {txid: txid});
+  App.redirectTo = function (page, params) {
+    var path = [page, $.param(params)].join("?");
+    window.location.href = path;
+  };
+
+  App.showPage = function () {
+    var queryParams = $.getQueryParameters();
+    console.info(queryParams);
+
+    if(queryParams["txid"]){
+      var txid = queryParams["txid"];
+
+      const chain = App.config.chainUrl;
+      const web3 = window.NervosWeb3(chain);
+
+      var url = "$chainBrowserUrl/#/transaction/$txid";
+      url = url.replace("$chainBrowserUrl", App.config.chainBrowserUrl);
+      url = url.replace("$txid", txid);
+      console.info(["url:", url]);
+
       web3.eth.getTransaction(txid).then(res => {
         console.log(['getTransaction', txid, res])
 
@@ -136,10 +165,12 @@ console.info(["nonce", nonce]);
         const content_body_de = baseb64Decode(content_body);
         console.info(['content_body baseb64_decode:', content_body_de]);
 
+        // render result
+        $("#txid").text(txid);
+        $("#contentBody").text(content_body_de);
+
       })
-
     }
-
   };
 
   $(App.init);
