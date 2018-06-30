@@ -272,6 +272,7 @@
         // render result
         var tmpl = $.templates("#showMessageTpl");
         var time = new Date(moment.time);
+        time = time.toLocaleString(); // format
         var html = tmpl.render({ txid: txid, content: content_body_de, time: time, img: moment.img });
         $("#showMessage").html(html);
       })

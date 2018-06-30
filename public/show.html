@@ -25,18 +25,18 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="jumbotron" id="showMessage">
+        <div class="" id="showMessage">
           <script id="showMessageTpl" type="text/x-jsrender">
-          <h2>{{:txid}}</h2>
-          <h5>{{:time}}</h5>
+          <p class="moment-time">{{:time}}</p>
           {{if img}}
-          <p>
-            <img src={{:img}} height="400" />
+          <p class="moment-img">
+            <img src={{:img}} height="300" />
           </p>
           {{/if}}
-          <p>
+          <p class="moment-text">
             {{:content}}
           </p>
+          <p class="moment-txid">此刻的hash:<br/>{{:txid}}</p>
           </script>
         </div>
       </div>

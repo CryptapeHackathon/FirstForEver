@@ -45,5 +45,20 @@ body {
   margin-right: auto;
 }
 
+#showMessage .moment-img{
+
+}
+
+#showMessage .moment-text{
+
+}
 
 
+#showMessage .moment-img{
+
+}
+
+#showMessage .moment-txid{
+  color: #ccc;
+  font-size: 13px;
+}
