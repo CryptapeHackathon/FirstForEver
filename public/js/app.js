@@ -35,6 +35,13 @@
   App.newPage = function () {
     console.info('newPage init');
 
+    // clear placehodler
+    $("#contentBody").focus(function(event) {
+      if($(this).val() == $(this).data("placehodler")){
+        $(this).val("");
+      }
+    });
+
     App.newPage.initFileSelect();
 
     // init submit button
