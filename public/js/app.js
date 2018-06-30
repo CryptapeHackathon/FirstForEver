@@ -211,7 +211,8 @@
 
         // render result
         var tmpl = $.templates("#showMessageTpl");
-        var html = tmpl.render({ txid: txid, content: moment.text });
+        var time = new Date(moment.time);
+        var html = tmpl.render({ txid: txid, content: moment.text, time: time });
         $("#showMessage").html(html);
       })
     }
