@@ -41,7 +41,8 @@ body {
 }
 
 .nav-item {
-  margin-left: 25px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
