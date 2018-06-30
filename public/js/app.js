@@ -150,7 +150,7 @@
     };
 
     var newMoment = App.newMoment({
-      text: contentBody,
+      text: content_body,
       time: (new Date()).toJSON()
     });
 
@@ -160,7 +160,6 @@
       console.info(['imgData', imgData]);
       newMoment.img = imgData;
     }
-
     const hexData = App.hashToTxData(newMoment);
 
     const privkey = App.config.privkey;
@@ -265,15 +264,15 @@
         var moment = App.newMoment(tx_data_de);
         console.info(['moment', moment]);
 
-        // const content_body = tx_data_de["content_body"];
+        const content_body = tx_data_de["text"];
 
-        // const content_body_de = baseb64Decode(content_body);
-        // console.info(['content_body baseb64_decode:', content_body_de]);
+        const content_body_de = baseb64Decode(content_body);
+        console.info(['content_body baseb64_decode:', content_body_de]);
 
         // render result
         var tmpl = $.templates("#showMessageTpl");
         var time = new Date(moment.time);
-        var html = tmpl.render({ txid: txid, content: moment.text, time: time, img: moment.img });
+        var html = tmpl.render({ txid: txid, content: content_body_de, time: time, img: moment.img });
         $("#showMessage").html(html);
       })
     }
