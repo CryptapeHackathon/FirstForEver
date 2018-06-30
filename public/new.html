@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>First Forever</title>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/0.9.90/jsrender.min.js"></script>
 
@@ -22,26 +24,25 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="page-header">
+        <!-- <div class="page-header">
           <h1>
             First Forever
           </h1>
-        </div>
-
-        <span class="badge badge-default">put slogan here</span>
+        </div> -->
 
         <form role="form">
-          <div class="form-group">
+          <div class="form-group" id="contentTimeContainer">
             <input type="text" value="timepicker" id="contentTime" />
           </div>
+
+          <span class="badge badge-default">把你觉得重要的一刻，存放在链上，永远保存，随时查看</span>
+
           <div class="form-group">
-            <textarea class="form-control" id="contentBody" rows="3">input here</textarea>
+            <textarea class="form-control" id="contentBody" rows="3">留下你的时光吧...</textarea>
           </div>
 
           <div class="form-group">
-            <label for="exampleInputFile">
-              File input
-            </label>
+            <span class="badge badge-default">选择一张照片，存下时光吧</span>
             <input type="file" class="form-control-file" id="momentFile" accept="image/*" />
             <script id="fileInfoTpl" type="text/x-jsrender">
             <ul>
@@ -52,9 +53,7 @@
             </p>
           </div>
 
-          <button type="submit" class="btn btn-primary" id="submitBtn">
-            Submit
-          </button>
+          <button type="submit" class="btn btn-primary" id="submitBtn">愿此刻永恒</button>
         </form>
       </div>
     </div>

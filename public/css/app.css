@@ -1,0 +1,42 @@
+
+body {
+  background: #F6F5F5;
+  padding: 15px 0;
+}
+
+img {
+  width: 100%;
+}
+@media (min-width: 40em) {
+  /* Probably some parent element that limits the img width */
+  main {
+    width: 50%;
+  }
+}
+
+#contentTimeContainer {
+  background-color: #fff;
+  box-shadow: 0px 8px 18px #ccc;
+  border-radius: 5px;
+  width: 345px;
+  height: 80px;
+}
+
+#contentBody{
+  background-color: #fff;
+  box-shadow: 0px 8px 18px #ccc;
+  border-radius: 5px;
+  width: 345px;
+  height: 185px;
+}
+
+
+#submitBtn {
+  height: 50px;
+  background: #2F3AEB;
+  width: 100%;
+  box-shadow: 2px 2px 18px #2F3AEB;
+  border-radius: 5px;
+}
+
+
