@@ -24,6 +24,9 @@
 
     $("#showPage").each(App.showPage);
 
+
+    $("#listPage").each(App.listPage);
+
   };
 
   App.submitContent = function (event) {
@@ -170,6 +173,20 @@
         $("#contentBody").text(content_body_de);
 
       })
+    }
+  };
+
+  App.listPage = function () {
+    var tmpl = $.templates("#listItemTpl");
+    var list = $("#messageList");
+
+    var memories = App.store.get("memories");
+    if(memories){
+      for (var i = 0; i < memories.length; i++) {
+        var txid = memories[i];
+        var newItem = tmpl.render({ txid : txid });
+        list.append(newItem);
+      }
     }
   };
 
