@@ -24,6 +24,9 @@
 
     $("#showPage").each(App.showPage);
 
+
+    $("#listPage").each(App.listPage);
+
   };
 
   App.submitContent = function (event) {
@@ -166,10 +169,24 @@
         console.info(['content_body baseb64_decode:', content_body_de]);
 
         // render result
-        $("#txid").text(txid);
-        $("#contentBody").text(content_body_de);
-
+        var tmpl = $.templates("#showMessageTpl");
+        var html = tmpl.render({ txid: txid, content: content_body_de });
+        $("#showMessage").html(html);
       })
+    }
+  };
+
+  App.listPage = function () {
+    var tmpl = $.templates("#listItemTpl");
+    var list = $("#messageList");
+
+    var memories = App.store.get("memories");
+    if(memories){
+      for (var i = 0; i < memories.length; i++) {
+        var txid = memories[i];
+        var newItem = tmpl.render({ txid : txid });
+        list.append(newItem);
+      }
     }
   };
 

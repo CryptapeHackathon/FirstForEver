@@ -6,6 +6,7 @@
     <title>First Forever</title>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/0.9.90/jsrender.min.js"></script>
 
     <script type="text/javascript" src="js/lib/@nervos-web3-lib-bundle.js"></script>
     <script type="text/javascript" src="js/lib/base64.js"></script>
@@ -22,13 +23,13 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="jumbotron">
-          <h2 id="txid">
-            show txid here.
-          </h2>
-          <p id="contentBody">
-            Show message here.
+        <div class="jumbotron" id="showMessage">
+          <script id="showMessageTpl" type="text/x-jsrender">
+          <h2>{{:txid}}</h2>
+          <p>
+            {{:content}}
           </p>
+          </script>
         </div>
       </div>
     </div>
