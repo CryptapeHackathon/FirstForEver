@@ -19,14 +19,54 @@
 
 
   App.init = function () {
-
-    $("#submitBtn").click(App.submitContent);
+    $("#newPage").each(App.newPage);
 
     $("#showPage").each(App.showPage);
 
-
     $("#listPage").each(App.listPage);
 
+  };
+
+  App.newPage = function () {
+    console.info('newPage init');
+
+    // init submit button
+    $("#submitBtn").click(App.submitContent);
+  };
+
+  App.newMoment = function (data) {
+    var moment = {
+      txid: null,
+      time: null,
+      text: null,
+      img: null,
+      ver: App.config.version
+    };
+    $.extend(moment, data);
+    return moment;
+  };
+
+  App.storedMoments = function () {
+    return App.store.get(App.momentsStoreKey);
+  };
+
+  App.resetStoredMoments = function () {
+    App.store.set(App.momentsStoreKey, []);
+  };
+
+  App.momentsStoreKey = "moments";
+
+  App.hashToTxData = function (hash) {
+    var txData = jsonToHex(hash);
+    var txData_de = hexToJson(txData);
+
+    console.info(['txData=', hash, txData]);
+    console.info(['txData hexToJson:', txData_de]);
+    console.info("encode/decode end");
+
+    const hexData = "0x"+txData;
+    console.info(['hexData:', hexData]);
+    return hexData;
   };
 
   App.submitContent = function (event) {
@@ -54,15 +94,12 @@
       content_body: content_body,
     };
 
-    var tx_data = jsonToHex(content_json);
-    var tx_data_de = hexToJson(tx_data);
+    var newMoment = App.newMoment({
+      text: contentBody,
+      time: (new Date()).toJSON()
+    });
 
-    console.info(['tx_data=', content_json, tx_data]);
-    console.info(['tx_data hexToJson:', tx_data_de]);
-    console.info("encode/decode end");
-
-    const hexData = "0x"+tx_data;
-    console.info(['hexData:', hexData]);
+    const hexData = App.hashToTxData(newMoment);
 
     const privkey = App.config.privkey;
     var nonce = Math.random().toString().slice(2);
@@ -86,22 +123,23 @@
      console.log(['sendTransaction', tx, res]);
 
      setTimeout(function(){
-       sendTransactionDone(tx, res);
+       sendTransactionDone(tx, res, newMoment);
      }, 6000); // TODO: make it quick
 
     });
 
-    function sendTransactionDone(tx, res) {
+    function sendTransactionDone(tx, res, newMoment) {
       const txid = res["result"]["hash"];
       console.log(["sendTransactionDone", "txid:", txid]);
 
-      var memories = App.store.get("memories");
-      if(!memories) memories = [];
-      memories.push(txid);
-      App.store.set("memories", memories);
+      var moments = App.store.get(App.momentsStoreKey);
+      if(!moments) moments = [];
+      newMoment.txid = txid; // set txid
+      moments.unshift(newMoment); // put latest one at top
+      App.store.set(App.momentsStoreKey, moments);
 
-      memories = App.store.get("memories");
-      console.info(['memories', memories]);
+      moments = App.store.get(App.momentsStoreKey);
+      console.info(['moments', moments]);
 
       var url = "$chainBrowserUrl/#/transaction/$txid";
       url = url.replace("$chainBrowserUrl", App.config.chainBrowserUrl);
@@ -163,14 +201,17 @@
         const tx_data_de = hexToJson(hex);
         console.info(["tx_data_de:", tx_data_de]);
 
-        const content_body = tx_data_de["content_body"];
+        var moment = App.newMoment(tx_data_de);
+        console.info(['moment', moment]);
 
-        const content_body_de = baseb64Decode(content_body);
-        console.info(['content_body baseb64_decode:', content_body_de]);
+        // const content_body = tx_data_de["content_body"];
+
+        // const content_body_de = baseb64Decode(content_body);
+        // console.info(['content_body baseb64_decode:', content_body_de]);
 
         // render result
         var tmpl = $.templates("#showMessageTpl");
-        var html = tmpl.render({ txid: txid, content: content_body_de });
+        var html = tmpl.render({ txid: txid, content: moment.text });
         $("#showMessage").html(html);
       })
     }
@@ -180,11 +221,13 @@
     var tmpl = $.templates("#listItemTpl");
     var list = $("#messageList");
 
-    var memories = App.store.get("memories");
-    if(memories){
-      for (var i = 0; i < memories.length; i++) {
-        var txid = memories[i];
-        var newItem = tmpl.render({ txid : txid });
+    var moments = App.storedMoments();
+    if(moments){
+      for (var i = 0; i < moments.length; i++) {
+        var moment = moments[i];
+        console.info(moment);
+        var time = new Date(moment.time);
+        var newItem = tmpl.render({ txid : moment.txid, text: moment.text, time: time });
         list.append(newItem);
       }
     }
