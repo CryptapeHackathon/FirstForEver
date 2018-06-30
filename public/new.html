@@ -6,6 +6,7 @@
     <title>First Forever</title>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/0.9.90/jsrender.min.js"></script>
 
     <script type="text/javascript" src="js/lib/@nervos-web3-lib-bundle.js"></script>
     <script type="text/javascript" src="js/lib/base64.js"></script>
@@ -41,9 +42,13 @@
             <label for="exampleInputFile">
               File input
             </label>
-            <input type="file" class="form-control-file" id="exampleInputFile" />
-            <p class="help-block">
-              Example block-level help text here.
+            <input type="file" class="form-control-file" id="momentFile" accept="image/*" />
+            <script id="fileInfoTpl" type="text/x-jsrender">
+            <ul>
+              <li>{{:type}}, {{:size}} bytes, last modified: {{:modified}}</li>
+            </ul>
+            </script>
+            <p class="help-block" id="fileInfo">
             </p>
           </div>
 
