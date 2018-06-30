@@ -129,6 +129,11 @@
 
   App.submitContent = function (event) {
     event.preventDefault();
+    console.info(event.target);
+
+    var button = $(event.target);
+    button.attr("disabled", true);
+    button.text(button.data("disable-text"));
 
     const contentBody = $("#contentBody").val();
 
