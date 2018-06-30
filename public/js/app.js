@@ -20,8 +20,9 @@
 
   App.init = function () {
     var chain = App.config.chainUrl;
-    web3 = window.NervosWeb3(chain);
+    App.web3 = window.NervosWeb3(chain);
     // NervosApp require this as a global variable
+    // FIXME: NervosApp is cash with this config
 
     $("#newPage").each(App.newPage);
 
@@ -180,6 +181,7 @@
     };
 
     // sendTransaction
+    var web3 = App.web3;
     web3.eth.sendTransaction(tx).then(res => {
      console.log(['sendTransaction', tx, res]);
 
@@ -231,6 +233,7 @@
       url = url.replace("$txid", txid);
       console.info(["url:", url]);
 
+      var web3 = App.web3;
       web3.eth.getTransaction(txid).then(res => {
         console.log(['getTransaction', txid, res])
 
