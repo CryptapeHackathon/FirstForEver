@@ -25,11 +25,12 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <ul id="messageList">
+        <div id="messageList">
           <script id="listItemTpl" type="text/x-jsrender">
-          <li class="list-item">
-            <a href="show.html?txid={{:txid}}">{{:text}} ({{:time}})</a>
-          </li>
+          <div class="list-item">
+            <div>{{:time}}</div>
+            <div class="moment-text"><a href="show.html?txid={{:txid}}">{{:text}}</a></div>
+          </div>
           </script>
         </ul>
       </div>

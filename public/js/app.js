@@ -292,9 +292,14 @@
     if(moments){
       for (var i = 0; i < moments.length; i++) {
         var moment = moments[i];
-        console.info(moment);
         var time = new Date(moment.time);
-        var newItem = tmpl.render({ txid : moment.txid, text: moment.text, time: time });
+        time = time.toLocaleString(); // format
+
+        var text = moment.text;
+        const content_body_de = baseb64Decode(text);
+        console.info(['content_body baseb64_decode:', content_body_de]);
+
+        var newItem = tmpl.render({ txid : moment.txid, text: content_body_de, time: time });
         list.append(newItem);
       }
     }
