@@ -129,8 +129,9 @@
 
     console.info(['send', contentBody]);
 
-    const chain = App.config.chainUrl;
-    const web3 = window.NervosWeb3(chain);
+    var chain = App.config.chainUrl;
+    var web3 = window.NervosWeb3(chain);
+    window.web3 = web3; // NervosApp require this as a global variable
 
 
     var content_type = "text";
