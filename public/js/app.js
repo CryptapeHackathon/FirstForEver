@@ -69,9 +69,13 @@
           return function(e) {
             // Render thumbnail.
             var span = document.createElement('span');
-            span.innerHTML = ['<img class="thumb" src="', e.target.result,
+            span.innerHTML = ['<img height="60" class="thumb" src="', e.target.result,
                               '" title="', escape(theFile.name), '"/>'].join('');
             document.getElementById('fileInfo').insertBefore(span, null);
+
+            // store img base64 data
+            var imgData = e.target.result;
+            $("#momentFile").data('imgdata', imgData);
           };
         })(f);
 
@@ -147,6 +151,13 @@
       text: contentBody,
       time: (new Date()).toJSON()
     });
+
+    // get img data
+    var imgData = $("#momentFile").data('imgdata');
+    if(imgData){
+      console.info(['imgData', imgData]);
+      newMoment.img = imgData;
+    }
 
     const hexData = App.hashToTxData(newMoment);
 
@@ -261,7 +272,7 @@
         // render result
         var tmpl = $.templates("#showMessageTpl");
         var time = new Date(moment.time);
-        var html = tmpl.render({ txid: txid, content: moment.text, time: time });
+        var html = tmpl.render({ txid: txid, content: moment.text, time: time, img: moment.img });
         $("#showMessage").html(html);
       })
     }
