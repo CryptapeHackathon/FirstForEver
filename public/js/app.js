@@ -169,9 +169,9 @@
         console.info(['content_body baseb64_decode:', content_body_de]);
 
         // render result
-        $("#txid").text(txid);
-        $("#contentBody").text(content_body_de);
-
+        var tmpl = $.templates("#showMessageTpl");
+        var html = tmpl.render({ txid: txid, content: content_body_de });
+        $("#showMessage").html(html);
       })
     }
   };
