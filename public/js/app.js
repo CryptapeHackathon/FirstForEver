@@ -19,6 +19,10 @@
 
 
   App.init = function () {
+    var chain = App.config.chainUrl;
+    web3 = window.NervosWeb3(chain);
+    // NervosApp require this as a global variable
+
     $("#newPage").each(App.newPage);
 
     $("#showPage").each(App.showPage);
@@ -129,10 +133,6 @@
 
     console.info(['send', contentBody]);
 
-    var chain = App.config.chainUrl;
-    var web3 = window.NervosWeb3(chain);
-    window.web3 = web3; // NervosApp require this as a global variable
-
 
     var content_type = "text";
     var content_body = contentBody;
@@ -225,9 +225,6 @@
 
     if(queryParams["txid"]){
       var txid = queryParams["txid"];
-
-      const chain = App.config.chainUrl;
-      const web3 = window.NervosWeb3(chain);
 
       var url = "$chainBrowserUrl/#/transaction/$txid";
       url = url.replace("$chainBrowserUrl", App.config.chainBrowserUrl);
